@@ -168,10 +168,10 @@ def customer():
         user1,plans1,plan1,claims1,dependents1,purchased1=db_con([
                                                     f"select fname,Cust_id,Gender,date_of_birth,Phone,Money,lname from Customer where Cust_id='{customer_id}';",
                                                     "Select Type_plan, Price, Other_Plan_details from Plan group by Type_plan;",    
-                                                    f"select Customer.Plan_id,expire_date from Customer join Plan on Customer.Plan_id=Plan.Plan_id where Customer.Cust_id='{customer_id}';",
-                                                    f"select Claim_id,amount_of_expense,date_claim from Claims where Cust_id='{customer_id}';",
-                                                    f"select * from Dependents where Cust_id='{customer_id}';",
-                                                    f"Select Plan_id,expire_date,Type_plan from Plan where purchase_cust_id='{customer_id}';"
+                                                    f"select Customer.Plan_id,expire_date,Type_plan from Customer join Plan on Customer.Plan_id=Plan.Plan_id where Customer.Cust_id='{customer_id}';",
+                                                    f"select Claim_id,amount_of_expense,date_claim from Claims where Cust_id='{customer_id}' order by Claim_id; ",
+                                                    f"select * from Dependents where Cust_id='{customer_id}' order by Dept_id;",
+                                                    f"Select Plan_id,expire_date,Type_plan from Plan where purchase_cust_id='{customer_id}' order by Plan_id;"
                                                     ]) #list of queries
 
 
@@ -216,8 +216,11 @@ def addplan():
     customer_id=request.args.get("customer_id")
     plan_type1=request.args.get("plan_type")
     print(customer_id)
-    user1=db_con([f"select fname,lname from Customer where Cust_id='{customer_id}';"])
-    return render_template('addplan.html', user=user1,customer=customer_id,plan_type=plan_type1)
+    user1,dependents1=db_con([
+                f"select fname,lname from Customer where Cust_id='{customer_id}';",
+                f"select D_name from Dependents where Cust_id='{customer_id}';"
+                ])
+    return render_template('addplan.html', user=user1,customer=customer_id,plan_type=plan_type1,dependents=dependents1)
 
 @app.route("/newplan", methods = ['POST'])
 def newplan():
@@ -239,7 +242,16 @@ def newplan():
                             f"select Money from Customer where Cust_id='{customer_id}';"
                             ])
         expired = date.today() +  timedelta(days=365)
-        x=db_con([
+        if dependent_name=="me":
+            x=db_con([
+                    f"insert into Plan values('{plan_id[0][0]+1}','{price[0][0]}' ,'{details[0][0]}' ,'{plan_type}','{expired}','{customer_id}');",
+                    f"update Customer set Plan_id='{plan_id[0][0]+1}' where Cust_id='{customer_id}';",
+                    f"update Customer set Money={money[0][0]-price[0][0]} where Cust_id='{customer_id}';"
+
+
+                    ])
+        else:
+            x=db_con([
                     f"insert into Plan values('{plan_id[0][0]+1}','{price[0][0]}' ,'{details[0][0]}' ,'{plan_type}','{expired}','{customer_id}');",
                     f"update Dependents set Plan_id='{plan_id[0][0]+1}' where D_name='{dependent_name}' and Cust_id='{customer_id}';",
                     f"update Customer set Money={money[0][0]-price[0][0]} where Cust_id='{customer_id}';"
@@ -247,7 +259,7 @@ def newplan():
 
                     ])
         flash("Successfully added")
-        return redirect(request.referrer)    
+        return redirect(f"/customer.html?customer_id={customer_id}")    
 
 
 
@@ -316,12 +328,12 @@ def newuser():
                             f"Select Other_Plan_details from Plan where Type_plan = '{plan_type}' group by Type_plan;"
                             ])
         expired = date.today() +  timedelta(days=365)
-        print(f"insert into Plan values('{plan_id[0][0]+1}','{price[0][0]}' ,'{details[0][0]}' ,'{plan_type}','{expired}','{cust_id}');",f"insert into  Customer values('{cust_id}','{fname}' ,'{lname}' ,{randint(1,9)*10000} ,'{visa_card}' ,'{phone}' , '{gender}','{bday}' ,'{plan_id[0][0]+1}'); ")
         
+        money=randint(1,9)*10000
         x=db_con([
-                f"insert into  Customer values('{cust_id}','{fname}' ,'{lname}' ,{randint(1,9)*10000} ,'{visa_card}' ,'{phone}' , '{gender}','{bday}' ,'{plan_id[0][0]+1}'); ",
-                f"insert into Plan values('{plan_id[0][0]+1}','{price[0][0]}' ,'{details[0][0]}' ,'{plan_type}','{expired}','{cust_id}');"
-
+                f"insert into  Customer values('{cust_id}','{fname}' ,'{lname}' ,{money} ,'{visa_card}' ,'{phone}' , '{gender}','{bday}' ,'{plan_id[0][0]+1}'); ",
+                f"insert into Plan values('{plan_id[0][0]+1}','{price[0][0]}' ,'{details[0][0]}' ,'{plan_type}','{expired}','{cust_id}');",
+                f"update Customer set Money={money[0][0]-price[0][0]} where Cust_id='{customer_id}';"
                     ])
         return redirect(f'/login.html')
 @app.route("/users.html")

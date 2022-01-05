@@ -28,7 +28,7 @@
                         <li class="nav-item dropdown">
                             <div class="nav-dropdown">
                                 <a href="#" id="nav2" class="nav-item nav-link dropdown-toggle text-secondary" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-user"></i> <span>{{ user[0][0][0]}} {{ user[0][0][1] }}</span> <i style="font-size: .8em;" class="fas fa-caret-down"></i>
+                                    <i class="fas fa-user"></i> <span>{{ user[0][0]}} {{ user[0][1] }}</span> <i style="font-size: .8em;" class="fas fa-caret-down"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end nav-link-menu">
                                     <ul class="nav-list">
@@ -68,10 +68,14 @@
                                         </div>
                                          <input type="hidden" id="plan_type" name="plan_type" value="{{ plan_type }}">
                                          <input type="hidden" id="custId" name="custId" value="{{ customer }}">
-                                        <div class="mb-3">
-                                            <label for="dependent_name" class="form-label">Dependent name</label>
-                                            <input type="text" name="dependent_name" class="form-control" required>
-                                        </div>
+                                        <div class="mb-3 text-start"> <label for="dependent_name">Dependent name</label> <select  id="dependent_name" name="dependent_name" class="form-control">
+                                            <option value="me">Me</option>
+                                            {% for dep in dependents %}
+                                            <option value="{{ dep[0] }}">{{ dep[0] }}</option>
+                                            {% endfor %}
+                                            
+                                        </select> </div>
+
                                         
                                             <button class="btn btn-success" type="submit"><i class="fas fa-check"></i> Add</button>
                                         </div>

@@ -196,14 +196,17 @@
             {% endwith %} 
     <div class="wrapper">
         <div class="left">
-            <img src=""
-                alt="Customer" width="300px">
+            
             <h2>{{ user[0][0] }} {{ user[0][6] }}</h2>
             <p><b>National ID :</b><br> {{ user[0][1] }}</p>
             <p><b>Gender :</b><br> {{ user[0][2] }}</p>
             <p><b>Date of birth :</b><br>{{ user[0][3] }}</p>
             <p><b>Phone :</b><br>{{ user[0][4] }}</p>
             <p><b>Money :</b><br>{{ user[0][5] }}</p>
+            <p><b>Your current plan ID :</b><br>{{ plan[0][0] }}</p>
+            <p><b>Expiry date :</b><br>{{ plan[0][1] }}</p>
+            <p><b>Type :</b><br>{{ plan[0][2] }}</p>
+            
         </div>
         <div class="right">
             <div class="plans">
@@ -220,15 +223,7 @@
                     </div>
                     {% endfor %}
                 </div>  
-                <div class="data">
-                    <h4>Your current plan </h4>
-                    <p>{{ plan[0][0] }}</p> 
-                </div>
-                <div class="data">
-                    <h4>Expiry date</h4>
-                    <p>{{ plan[0][1] }}</p> 
-                </div>
-
+                
                 
             </div>
 
