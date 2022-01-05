@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta charset="description" content="We are a health insurance company">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!--javascript code-->
+    <style>
+        * {
+            padding: 0;
+            box-sizing: border-box;
+            list-style: none;
+            font-family: 'Josefin Sans', sans-serif;
+        }
+
+        body {
+            height: 100%;
+            width: 100%;
+            background-color: #f3f3f3;
+        }
+
+        .wrapper {
+            width: auto;
+            display: flex;
+            box-shadow: 0 1px 20px 0 rgba(69, 90, 100, .08);
+        }
+
+        .wrapper .left {
+            width: 25%;
+            background: linear-gradient(to right, #01a9ac, #01dbdf);
+            padding: 20px 20px;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+            text-align: left;
+            color: #fff;
+        }
+
+        .wrapper .left img {
+            
+            margin-bottom: 5px;
+            border-radius: 12px;
+        }
+        
+        .wrapper .left b{
+            margin-bottom: 10px;
+            color: #1d2436;
+            
+        }
+        .wrapper .left h2 {
+            margin-bottom: 10px;
+            color: #1d2436;
+            text-align: center;
+        }
+
+        .wrapper .left p {
+            font-size: 20px;
+            color: antiquewhite;
+            text-align: center;
+        }
+
+        .wrapper .right {
+            width: 75%;
+            background: #fff;
+            padding: 20px 20px;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+
+        .wrapper .right .info,
+        .wrapper .right .projects {
+            margin-bottom: 25px;
+        }
+
+        .wrapper .right .plans h3,
+        .wrapper .right .info h3,
+        .wrapper .right .projects h3 {
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #e0e0e0;
+            color: #353c4e;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+        }
+       
+        .wrapper .right .info_data,
+        .wrapper .right .projects_data {
+            display: flex;
+            justify-content: space-between;
+        }
+        .wrapper .right .plans .data,
+        .wrapper .right .info_data .data,
+        .wrapper .right .projects_data .data {
+            width: 45%;
+        }
+
+        .wrapper .right .plans h4 ,
+        .wrapper .right .info_data .data h4,
+        .wrapper .right .projects_data .data h4 {
+            color: #353c4e;
+            margin-bottom: 5px;
+        }
+
+        .wrapper .right .plans p,
+        .wrapper .right .info_data .data p,
+        .wrapper .right .projects_data .data p {
+            font-size: 13px;
+            margin-bottom: 10px;
+            color: #919aa3;
+        }
+
+        .wrapper .right .plans .card h4 span {
+            color: #4c93af;
+        }
+
+
+        .wrapper .right .plans .card .gold {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            border: 2px solid #01dbdf;
+            border-radius: 12px;
+            padding: 5px;
+            text-align: center;
+        }
+
+        .wrapper .right .plans .card .premium {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            text-align: center;
+            border: 2px solid #01dbdf;
+            border-radius: 12px;
+            padding: 5px;
+        }
+
+        .wrapper .right .plans .card .basic {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            text-align: center;
+            border: 2px solid #01dbdf;
+            border-radius: 12px;
+            padding: 5px;
+        }
+
+        .button {
+            background-color: #6ed6ff;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 12px;
+           
+        }
+        .center {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .cards {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .c{   
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid rgb(0, 0, 0);
+            border-radius: 10px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+    {% with messages = get_flashed_messages() %}  
+                {% if messages %}  
+                    {% for message in messages %}  
+                        <script type="text/javascript">alert("{{ message }}");</script>  
+                    {% endfor %}  
+                {% endif %}  
+            {% endwith %} 
+    <div class="wrapper">
+        <div class="left">
+            <img src=""
+                alt="Customer" width="300px">
+            <h2>{{ user[0][0] }} {{ user[0][6] }}</h2>
+            <p><b>National ID :</b><br> {{ user[0][1] }}</p>
+            <p><b>Gender :</b><br> {{ user[0][2] }}</p>
+            <p><b>Date of birth :</b><br>{{ user[0][3] }}</p>
+            <p><b>Phone :</b><br>{{ user[0][4] }}</p>
+            <p><b>Money :</b><br>{{ user[0][5] }}</p>
+        </div>
+        <div class="right">
+            <div class="plans">
+                <h3>Plans</h3>
+                
+                <div class="cards">
+                    {% for plan in plans %}
+                    <div class="card">
+                        <div class="gold">
+                            <h4><b>{{ plan[0] }}</b></h4>
+                            <h4><sup>$</sup>{{ plan[1] }}<span>/year</span></h4>
+                            <button class="button"><a href="/addplan.html?plan_type={{ plan[0] }}&customer_id={{ user[0][1] }}">Buy</a></button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>  
+                <div class="data">
+                    <h4>Your current plan </h4>
+                    <p>{{ plan[0][0] }}</p> 
+                </div>
+                <div class="data">
+                    <h4>Expiry date</h4>
+                    <p>{{ plan[0][1] }}</p> 
+                </div>
+
+                
+            </div>
+
+           
+
+            <div class="info">
+                <h3>Purchased plans</h3>
+                <table id="myTable1">
+                    <tr>
+                    <td>Plan ID</td>
+                    <td>Expired date</td>
+                    <td>Type</td>
+
+                    </tr>
+                    {% for plan in purchased %}
+                    
+                    <tr>
+                    <td>{{ plan[0] }}</td>
+                    <td>{{ plan[1] }}</td>
+                    <td>{{ plan[2] }}</td>
+
+                    </tr>
+                    
+                    {% endfor %}
+                
+                </table>
+               
+            </div>
+
+            <div class="info">
+                <h3>claims</h3>
+                <table id="myTable2">
+
+                    <tr>
+                    <td>ID</td>
+                    <td>Expenses</td>
+                    <td>Date</td>
+                    </tr>
+                    {% for claim in claims %}
+                
+                    <tr>
+                    <td><a href="claim.html?claim_id={{ claim[0] }}">{{ claim[0] }}</a></td>
+                    <td>{{ claim[1] }}</td>
+                    <td>{{ claim[2] }}</td>
+                    </tr>
+                    {% endfor %}
+                
+                </table>
+                <br>
+                    <div class="center">
+                      
+                    <a href='/add-claim.html?customer_id={{ user[0][1] }}'>
+                        <button class="button" type="button"  >Add</button> 
+                    </a>
+                    </div>
+            </div>
+
+            <div class="projects">
+                <h3>dependents</h3>
+                    <table id="myTable">
+                        <tr>
+                        <td>ID</td>
+                        <td>Name</td>
+                        <td>Date of birth</td>
+                        <td>Gender</td>
+                        <td>Relationship</td>
+                        <td>Plan ID</td>
+                        </tr>
+
+                        {% for dependent1 in dependents %}
+                        <tr>
+                        
+                        <td>{{ dependent1[1] }}</td>
+                        <td>{{ dependent1[2] }}</td>
+                        <td>{{ dependent1[3] }}</td>
+                        <td>{{ dependent1[4] }}</td>
+                        <td>{{ dependent1[5] }}</td>
+                        <td>{{ dependent1[6] }}</td>
+                        </tr>
+
+                        {% endfor %}
+                    </table>
+                    <br>
+                <form action="newdependent" method="POST">
+                    <div class="center">
+                            <input type="hidden" id="custId" name="custId" value="{{ user[0][1] }}">
+                            <label for="fname"><b>Name:</b></label>
+                            <input class="c" type="text" id="fname" name="fname" required><br><br>
+                            <label for="bday"><b>Date of birth:</b></label>
+                            <input class="c" type="text" id="bday" name="bday" required><br><br>
+                            <label for="gender"><b>Gender:</b></label>
+                            <input class="c" type="text" id="gender" name="gender" required><br><br>
+                            <label for="relation"><b>Relationship:</b></label>
+                            <input class="c" type="text" id="relation" name="relation" required><br><br>
+                            <label for="plan_id"><b>Plan Id:</b></label>
+                            <input class="c" type="text" id="plan_id" name="plan_id" required><br><br>
+                        <button class="button" type="submit" >Add</button>
+                    </div>
+                </form>    
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

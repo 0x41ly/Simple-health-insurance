@@ -1,0 +1,120 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Admin Dashboard | company</title>
+    <link href="static/assets/vendor/fontawesome/css/fontawesome.min.css" rel="stylesheet">
+    <link href="static/assets/vendor/fontawesome/css/solid.min.css" rel="stylesheet">
+    <link href="static/assets/vendor/fontawesome/css/brands.min.css" rel="stylesheet">
+    <link href="static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/assets/css/master.css" rel="stylesheet">
+    <link href="static/assets/vendor/flagiconcss/css/flag-icon.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+         <div class="wrapper">
+        <nav id="sidebar" class="active">
+
+            <ul class="list-unstyled components text-secondary">
+                <li>
+                    <a href="/admin.html"><i class="fas fa-home"></i> Dashboard</a>
+                </li>
+                
+                <li>
+                    <a href="#pagesmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-copy"></i> Claims</a>
+                    <ul class="collapse list-unstyled" id="pagesmenu">
+                        <li>
+                            <a href="/claims.html?type=new"><i class="fas fa-file"></i> new</a>
+                        </li>
+                        <li>
+                            <a href="/claims.html?type=resolved"><i class="fas fa-info-circle"></i> resolved</a>
+                        </li>
+                        <li>
+                            <a href="/claims.html?type=unresolved"><i class="fas fa-info-circle"></i> unresolved</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="/users.html"><i class="fas fa-user-friends"></i>Users</a>
+                </li>
+            </ul>
+        </nav>
+        <div id="body" class="active">
+            <!-- navbar navigation component -->
+            <nav class="navbar navbar-expand-lg navbar-white bg-white">
+                <button type="button" id="sidebarCollapse" class="btn btn-light">
+                    <i class="fas fa-bars"></i><span></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="nav navbar-nav ms-auto">
+                        
+                        <li class="nav-item dropdown">
+                            <div class="nav-dropdown">
+                                <a href="#" id="nav2" class="nav-item nav-link dropdown-toggle text-secondary" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-user"></i> <span>Admin</span> <i style="font-size: .8em;" class="fas fa-caret-down"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end nav-link-menu">
+                                    <ul class="nav-list">
+                                        <li><a href="" class="dropdown-item"><i class="fas fa-address-card"></i> Profile</a></li>
+                                        <li><a href="/claims.html" class="dropdown-item"><i class="fas fa-cog"></i> Claims</a></li>
+                                        <div class="dropdown-divider"></div>
+                                        <li><a href="/logout.html" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 page-header">
+                            <div class="page-pretitle">Overview</div>
+                            <h2 class="page-title">Dashboard</h2>
+                        </div>
+                    </div>
+
+                     <div class="col-md-6">
+                        <div class="card">
+                            <div class="content">
+                                <div class="head">
+                                    <h5 class="mb-0">Claims report</h5>
+                                    
+                                </div>
+                                <div class="canvas-wrapper">
+                                    <table class="table table-striped">
+                                        <thead class="success">
+                                            <tr>
+                                                <th>Claim ID</th>
+                                                <th class="text-end">status</th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for claim in claims %}
+                                            {% for c in claim %}
+                                            <tr>
+                                                <td><i><a href="/claim.html?claim_id={{ claim[0] }}">{{ c[0] }} </i></a></td>
+                                                <td><i><a href="/change?value={{ claim[1] }}">{{ c[1] }} </i></a></td>
+                                                <td><a href="/resolve?claim_id={{ c[0] }}" class="btn btn-outline-danger btn-rounded"><i class="bi bi-check"></i>Mark Resolved</a></td>
+                                                <td><a href="/unresolve?claim_id={{ c[0] }}" class="btn btn-outline-danger btn-rounded"><i class="bi bi-eye"></i>Mark Unresolved</a></td>
+                                                <td class="text-end"></td>
+                                            {% endfor %}
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+</body>
+</html> 
