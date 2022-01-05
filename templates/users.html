@@ -94,7 +94,7 @@
                                     <tr>
                                         {% for user in data %}
                                         {% for user1 in user %}
-                                        <td>{{ user1[0] }} {{ user1[1] }}</td>
+                                        <td><a href="/claims.html?user={{ user1[6] }}">{{ user1[0] }} {{ user1[1] }}</a></td>
                                         <td>{{ user1[2] }}</td>
                                         <td>{{ user1[3] }}</td>
                                         <td>{{ user1[4] }}</td>

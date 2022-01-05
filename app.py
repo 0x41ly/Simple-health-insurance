@@ -142,10 +142,13 @@ def claim():
 @app.route("/claims.html")
 def claims():
     status=request.args.get('type')
-    if not status:
-        claims1=db_con(["select Claim_id,status from Claims;"])
+    user=request.args.get('user')
+    if user and not status :
+        claims1=db_con([f"select Claim_id,status from Claims where Cust_id='{user}';"])
+    elif status and not user:
+        claims1=db_con([f"select Claim_id,status from Claims where status='{status}';"])
     else:
-        claims1=db_con([f"select Claim_id,status from Claims where status='{status}';"])   
+        claims1=db_con(["select Claim_id,status from Claims;"])   
     return render_template('claims.html',claims=claims1)            
 @app.route('/resolve')
 def resolve():
