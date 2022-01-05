@@ -326,7 +326,7 @@ def newuser():
         return redirect(f'/login.html')
 @app.route("/users.html")
 def users():
-    data1=db_con(["select fname,lname,(select count(Claim_id) from Claims as c where status='New' and c.Cust_id=Claims.Cust_id) as n,(select count(Claim_id) from Claims as c where status='Resolved' and c.Cust_id=Claims.Cust_id) as r,(select count(Claim_id) from Claims as c where status='Unresolved' and c.Cust_id=Claims.Cust_id) as u,count(Claim_id) from Customer natural join Claims group by Cust_id ;"])
+    data1=db_con(["select fname,lname,(select count(Claim_id) from Claims as c where status='New' and c.Cust_id=Claims.Cust_id) as n,(select count(Claim_id) from Claims as c where status='Resolved' and c.Cust_id=Claims.Cust_id) as r,(select count(Claim_id) from Claims as c where status='Unresolved' and c.Cust_id=Claims.Cust_id) as u,count(Claim_id),Customer.Cust_id from Customer natural join Claims group by Cust_id ;"])
     return render_template('users.html' , data=data1)  
 
 
