@@ -28,7 +28,7 @@ create table Dependents(
 	primary key (Cust_id, D_name, Dept_id,Gender, Relationship,date_of_birth),
 	CONSTRAINT fk_Dependents_Customer	 foreign key (Cust_id ) references Customer  (Cust_id) on update cascade
 	);
-insert into Dependents values('1','12' ,'ali' ,'2020-2-2022','male','son','4');
+insert into Dependents values('1','12' ,'ali' ,'2020-2-20','male','son','4');
 insert into Dependents values('2','14' ,'abanod' ,'2010-2-10','male','son','5');
 insert into Dependents values('3','13' ,'mohamed' ,'2015-2-23','male','son','6');
 
