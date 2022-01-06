@@ -40,7 +40,7 @@ def addClaim():
     user1,hospitals1,dependents1=db_con([
                             f"select fname,lname from Customer where Cust_id='{customer_id}';",
                             f"select hospital_id,hospital_name from Hospital;",
-                            f"select D_name from Dependents where Cust_id='{customer_id}';"
+                            f"select D_name,Dept_id from Dependents where Cust_id='{customer_id}';"
                             ])
 
     return render_template('add-claim.html',username=user1,hospitals=hospitals1,customer=customer_id,dependents=dependents1)
@@ -53,7 +53,6 @@ def newclaim():
     hospital_id=request.form.get('hospital_name')
     expense=request.form.get('expense')
     beneficiary=request.form.get('for')
-    plan=request.form.get('plan')
     receipt=request.files['receipt']
     claim_id = db_con(["select count(*) from Claims;"])[0][0][0] + 1 #retrieve claim id
     if not claim_title:
@@ -71,15 +70,17 @@ def newclaim():
     elif not expense:
         flash("Missing data: Amont of expense")
         return redirect(request.referrer)
-    elif not plan:
-        flash("Missing data: Plan")
-        return redirect(request.referrer)
     elif  receipt=='':
         flash("Missing data: Receipt")
         return redirect(request.referrer)
     else:
+        if beneficiary=='me':
+            plan=db_con([f"select Plan_id from Customer where Cust_id='{customer_id}';"])[0][0][0]
+        else:
+            plan=db_con([f"select Plan_id from Dependents where Cust_id='{customer_id}' and Dept_id='{beneficiary}';"])[0][0][0]
         receipt.save(os.path.join(app.config['UPLOAD_FOLDER'], str(claim_id)+".png"))
-        x=db_con([f"insert into Claims   values('{claim_id}', {expense}, '{claim_title}','{plan}','New','{beneficiary}','{date.today()}','{customer_id}',{hospital_id});"]) # add query here
+        print(f"insert into Claims   values('{claim_id}', {expense}, '{claim_title}','{plan}','New','{beneficiary}','{date.today()}','{customer_id}',{hospital_id});")
+        x=db_con([f"insert into Claims   values('{claim_id}', {float(expense)}, '{claim_title}','{plan}','New','{beneficiary}','{date.today()}','{customer_id}',{hospital_id});"]) # add query here
         flash("Successfully claimed")
         return redirect(f"/claim.html?claim_id={claim_id}") 
 
