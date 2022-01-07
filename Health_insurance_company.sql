@@ -34,30 +34,29 @@ insert into Dependents values('3','13' ,'mohamed' ,'6-2-2023','male','son','6');
 
 CREATE TABLE Plan (
   Plan_id	 varchar(50) primary key,
-
   Type_plan 	varchar(50),
   expire_date	 varchar(50),
   purchase_cust_id VARCHAR(50),
-  CONSTRAINT fk_Plan_Customer	 foreign key (purchase_cust_id) references Customer (Cust_id) on update cascade
+  CONSTRAINT fk_Plan_Customer foreign key (purchase_cust_id) references Customer (Cust_id) on update cascade
 );
 create index Type_plan_index on Plan(Type_plan);
-insert into Plan values('1','Basic','20-20-2029','1'); 
-insert into Plan values('2','Premium','20-20-2029','2'); 
+insert into Plan values('1' ,'Basic','20-20-2029','1'); 
+insert into Plan values('2' ,'Premium','20-20-2029','2'); 
 insert into Plan values('3','Golden','20-20-2029','3'); 
-insert into Plan values('4','Premium','20-20-2029','1');
-insert into Plan values('5','Golden','20-20-2029','2');
-insert into Plan values('6','Basic','20-20-2029','3');
+insert into Plan values('4' ,'Premium','20-20-2029','1');
+insert into Plan values('5' ,'Golden','20-20-2029','2');
+insert into Plan values('6' ,'Basic','20-20-2029','3');
 
 CREATE TABLE sub_Plan (
   Other_Plan_details varchar(250),
   Type_plan 	varchar(50),
   Price 	numeric(12,2) check (Price > 0),
-  primary key (Other_Plan_details,Type_plan),
-  CONSTRAINT fk_Plan_plan	 foreign key (Type_plan) references plan (Type_plan) on update cascade
+  primary key(Other_Plan_details,Type_plan,Price),
+  CONSTRAINT fk_Plan_plan	 foreign key (Type_plan) references Plan (Type_plan) on update cascade
 );
-insert into sub_Plan values('blblbblbl Golden','Golden',3000.00); 
-insert into sub_Plan values('PremiumPremiumPremium' ,'Premium',2000.00);
-insert into sub_Plan values('BasicBasicBasic' ,'Basic',1000.00);
+insert into sub_Plan values('blblbblbl Golden','Golden','1800.00'); 
+insert into sub_Plan values('PremiumPremiumPremium' ,'Premium','800.00');
+insert into sub_Plan values('BasicBasicBasic' ,'Basic','400.00');
 CREATE TABLE  Hospital (
   hospital_id 	INT NOT NULL,
   hospital_name VARCHAR(50) NULL,
