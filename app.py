@@ -136,7 +136,7 @@ def admin():
     claims1,users1,hospitals1=db_con([
                                         "select status,count(Claim_id) from Claims group by status;",
                                         "select status,count(Claim_id) from Claims group by Cust_id;",
-                                        "select hospital_name,count(Claim_id) from Claims natural join Hospital group by hospital_id;",
+                                        "select hospital_name,count(Claim_id) from Claims natural right outer join Hospital group by hospital_id;",
                                         ]) #list of queries
     
     return render_template('admin.html' , claims= claims1 , users=users1 , hospitals=hospitals1)   
