@@ -98,6 +98,7 @@ def newhospital():
     time_of_work=request.form.get('time_of_work')
     specialization=request.form.get('specialization')
     hospital_description=request.form.get('hospital-description')
+    plan_type=request.form.get("plan_type")
     hospital_id= db_con(["select count(*) from Hospital;"])[0][0][0] + 1
     if not hospital_name:
         flash("Missing data: Hospital Name")
@@ -117,9 +118,15 @@ def newhospital():
     elif not hospital_description:
         flash("Missing data: Hospital Description")
         return redirect(request.referrer)
+    elif not plan_type:
+        flash("Missing data: Hospital Plan Type")
+        return redirect(request.referrer)
     else:
         
-        x = db_con([f"insert into  Hospital values  ({hospital_id},'{hospital_name}','{phone}','{hospital_location}','{time_of_work}','{specialization}','{hospital_description}');"]) # add query here
+        x = db_con([
+                    f"insert into  Hospital values  ({hospital_id},'{hospital_name}','{phone}','{hospital_location}','{time_of_work}','{specialization}','{hospital_description}');",
+                    f"insert into enroll values({hospital_id},'{plan_type}');"
+                    ]) # add query here
         flash("Successfully added")
         return redirect(request.referrer)  
 
