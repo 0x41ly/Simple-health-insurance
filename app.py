@@ -171,7 +171,7 @@ def customer():
     else:
         user1,plans1,plan1,claims1,dependents1,purchased1=db_con([
                                                     f"select fname,Cust_id,Gender,date_of_birth,Phone,Money,lname from Customer where Cust_id='{customer_id}';",
-                                                    "Select Type_plan, Price, Other_Plan_details from Plan group by Type_plan;",    
+                                                    "Select Type_plan, Price, Other_Plan_details from sub_Plan;",    
                                                     f"select Customer.Plan_id,expire_date,Type_plan from Customer join Plan on Customer.Plan_id=Plan.Plan_id where Customer.Cust_id='{customer_id}';",
                                                     f"select Claim_id,amount_of_expense,date_claim from Claims where Cust_id='{customer_id}' order by Claim_id; ",
                                                     f"select * from Dependents where Cust_id='{customer_id}' order by Dept_id;",
