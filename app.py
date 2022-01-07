@@ -239,8 +239,9 @@ def newplan():
         flash("Missing data: Dependent Name")
         return redirect(request.referrer)      
     else:
-        plan_id,money=db_con([
+        plan_id,price,money=db_con([
                             "select count(*) from Plan",
+                            f"Select price from sub_Plan where Type_plan = '{plan_type}';",
                             f"select Money from Customer where Cust_id='{customer_id}';"
                             ])
         expired = date.today() +  timedelta(days=365)
