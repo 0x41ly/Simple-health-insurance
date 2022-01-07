@@ -324,7 +324,7 @@ def newuser():
         flash("Missing data: Date Of Birth")
         return redirect(request.referrer) 
     else:
-        plan_id,price,details=db_con([
+        plan_id,price=db_con([
                             "select count(*) from Plan",
                             f"Select price from sub_Plan where Type_plan = '{plan_type}';",
                             ])
