@@ -127,6 +127,10 @@ def newhospital():
                     f"insert into  Hospital values  ({hospital_id},'{hospital_name}','{phone}','{hospital_location}','{time_of_work}','{specialization}','{hospital_description}');",
                     f"insert into enroll values({hospital_id},'{plan_type}');"
                     ]) # add query here
+        if plan_type=='Basic':
+            x=db_con([f"insert into enroll values({hospital_id},'Premium');insert into enroll values({hospital_id},'Golden');"])
+        elif plan_type=='Premium':
+            x=db_con([f"insert into enroll values({hospital_id},'Golden');"])    
         flash("Successfully added")
         return redirect(request.referrer)  
 
