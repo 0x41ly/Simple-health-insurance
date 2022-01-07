@@ -1,8 +1,8 @@
 ## Health Insurance Company
 A simple Web App using Flask
 
-## Installion
-- ```
+## Installion 
+```
 git clone https://github.com/0x41ly/Simple-health-insurance.git
 cd Simple-health-insurance
 ```
@@ -15,4 +15,4 @@ cd Simple-health-insurance
 chmod +x run.sh     
 ./run.sh
 ```
-- Change the env variable to `production` for production area
+- Change the env variable to ```production``` for production area
