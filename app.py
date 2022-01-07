@@ -337,7 +337,7 @@ def newuser():
         x=db_con([
                 f"insert into  Customer values('{cust_id}','{fname}' ,'{lname}' ,{money} ,'{visa_card}' ,'{phone}' , '{gender}','{bday}' ,'{plan_id[0][0]+1}'); ",
                 f"insert into Plan values('{plan_id[0][0]+1}','{price[0][0]}' ,'{details[0][0]}' ,'{plan_type}','{expired}','{cust_id}');",
-                f"update Customer set Money={money[0][0]-price[0][0]} where Cust_id='{customer_id}';"
+                f"update Customer set Money={money[0][0]-price[0][0]} where Cust_id='{cust_id}';"
                     ])
         return redirect(f'/login.html')
 @app.route("/users.html")
