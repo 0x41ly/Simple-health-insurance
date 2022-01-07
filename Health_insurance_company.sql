@@ -1,4 +1,4 @@
-drop database IF EXISTS health_insurance_company;
+drop database health_insurance_company;
 create database health_insurance_company;
 use health_insurance_company;
 CREATE table Customer (
@@ -13,9 +13,9 @@ CREATE table Customer (
     Plan_id	 varchar(50) ,
 	PRIMARY KEY (Cust_id)
     );
-insert into  Customer values('1','jony' ,'mark' ,'100000000.00' ,'123456789' ,'01026564923' , 'male','2010-10-10' ,'1'); 
-insert into  Customer values('2','michal' ,'mena' ,'200000000.00' ,'987654321' ,'0113595456' , 'male','2005-5-8' ,'2');
-insert into  Customer values('3','ali' ,'mohamed' ,'300000000.00' ,'147852369' ,'01236589454' , 'male','2000-2-2' ,'3');
+insert into  Customer values('1','jony' ,'mark' ,'100000000.00' ,'123456789' ,'01026564923' , 'male','10-10-2010' ,'1'); 
+insert into  Customer values('2','michal' ,'mena' ,'200000000.00' ,'987654321' ,'0113595456' , 'male','5-5-1998' ,'2');
+insert into  Customer values('3','ali' ,'mohamed' ,'300000000.00' ,'147852369' ,'01236589454' , 'male','3-2-2000' ,'3');
 
 create table Dependents(
 	Cust_id	 VARCHAR(50), 
@@ -28,27 +28,36 @@ create table Dependents(
 	primary key (Cust_id, D_name, Dept_id,Gender, Relationship,date_of_birth),
 	CONSTRAINT fk_Dependents_Customer	 foreign key (Cust_id ) references Customer  (Cust_id) on update cascade
 	);
-insert into Dependents values('1','12' ,'ali' ,'2020-2-20','male','son','4');
-insert into Dependents values('2','14' ,'abanod' ,'2010-2-10','male','son','5');
-insert into Dependents values('3','13' ,'mohamed' ,'2015-2-23','male','son','6');
+insert into Dependents values('1','12' ,'ali' ,'3-2-2022','male','son','4');
+insert into Dependents values('2','14' ,'abanod' ,'4-2-2010','male','son','5');
+insert into Dependents values('3','13' ,'mohamed' ,'6-2-2023','male','son','6');
 
 CREATE TABLE Plan (
   Plan_id	 varchar(50) primary key,
-  Price 	numeric(12,2) check (Price > 0),
-  Other_Plan_details varchar(250),
+
   Type_plan 	varchar(50),
   expire_date	 varchar(50),
   purchase_cust_id VARCHAR(50),
-  CONSTRAINT fk_Plan_Customer	 foreign key (purchase_cust_id) references Customer  (Cust_id) on update cascade
+  CONSTRAINT fk_Plan_Customer	 foreign key (purchase_cust_id) references Customer (Cust_id) on update cascade
 );
 create index Type_plan_index on Plan(Type_plan);
-insert into Plan values('1','1000.00' ,' bla' ,'Basic','2022-2-9','1'); 
-insert into Plan values('2','2000.00' ,'  bla' ,'Premium','2022-2-9','2'); 
-insert into Plan values('3','3000.00' ,'  bla' ,'Golden','2022-2-9','3'); 
-insert into Plan values('4','2000.00' ,' bla ' ,'Premium','2022-2-9','1');
-insert into Plan values('5','3000.00' ,'  bla' ,'Golden','2022-2-9','2');
-insert into Plan values('6','1000.00' ,'  bla' ,'Basic','2022-2-9','3');
+insert into Plan values('1','Basic','20-20-2029','1'); 
+insert into Plan values('2','Premium','20-20-2029','2'); 
+insert into Plan values('3','Golden','20-20-2029','3'); 
+insert into Plan values('4','Premium','20-20-2029','1');
+insert into Plan values('5','Golden','20-20-2029','2');
+insert into Plan values('6','Basic','20-20-2029','3');
 
+CREATE TABLE sub_Plan (
+  Other_Plan_details varchar(250),
+  Type_plan 	varchar(50),
+  Price 	numeric(12,2) check (Price > 0),
+  primary key (Other_Plan_details,Type_plan),
+  CONSTRAINT fk_Plan_plan	 foreign key (Type_plan) references plan (Type_plan) on update cascade
+);
+insert into sub_Plan values('blblbblbl Golden','Golden',3000.00); 
+insert into sub_Plan values('PremiumPremiumPremium' ,'Premium',2000.00);
+insert into sub_Plan values('BasicBasicBasic' ,'Basic',1000.00);
 CREATE TABLE  Hospital (
   hospital_id 	INT NOT NULL,
   hospital_name VARCHAR(50) NULL,
@@ -110,9 +119,9 @@ CREATE TABLE  Claims (
    CONSTRAINT fk_hospital_id_Claim FOREIGN KEY (hospital_id) REFERENCES  Hospital  (hospital_id)on update cascade
     );
  
-insert into Claims   values('20661526', 2500.00, 'diabetes','1','New','12','2021-2-9','1',73354597);
-insert into Claims   values('15205452', 1500.00,null,'2','Resolved','2','2021-2-10','2',89255485);
-insert into Claims   values('95764258', 750.50,null,'3','unsolved','13','2021-2-11','3',61804435);
+insert into Claims   values('20661526', 2500.00, 'diabetes','1','New','12','1-1-2001','1',73354597);
+insert into Claims   values('15205452', 1500.00,null,'2','Resolved','2','3-5-2006','2',89255485);
+insert into Claims   values('95764258', 750.50,null,'3','unsolved','13','3-9-2030','3',61804435);
 
  
 
@@ -129,7 +138,7 @@ CREATE TABLE  Bill(
 	CONSTRAINT fk_bill_Customer	 foreign key (Cust_id  ) references Customer (Cust_id )on update cascade
   );
 
-insert into Bill   values('23','  ', 2500.00, 73354597,'1','2021-2-11');
-insert into Bill   values('122', '  ' ,1500.00,89255485,'2','2021-2-11');
-insert into Bill   values('98', '  ',750.50,32432583,'3','2021-2-11');
+insert into Bill   values('23','  ', 2500.00, 73354597,'1','1-1-2001');
+insert into Bill   values('122', '  ' ,1500.00,89255485,'2','3-5-2006');
+insert into Bill   values('98', '  ',750.50,32432583,'3','3-9-2030');
 

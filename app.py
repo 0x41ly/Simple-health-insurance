@@ -27,7 +27,7 @@ def internal_server_error(e):
 def index():
     hospitals1,plans1=db_con([
                                 "select * from Hospital;",
-                                "Select Type_plan, Price, Other_Plan_details from Plan group by Type_plan;"
+                                "Select Type_plan, Price, Other_Plan_details from sub_Plan ;"
                                 ])
     
     return render_template('index.html', hospitals=hospitals1,plans=plans1)
@@ -239,16 +239,14 @@ def newplan():
         flash("Missing data: Dependent Name")
         return redirect(request.referrer)      
     else:
-        plan_id,price,details,money=db_con([
+        plan_id,money=db_con([
                             "select count(*) from Plan",
-                            f"Select price from Plan where Type_plan = '{plan_type}' group by Type_plan;",
-                            f"Select Other_Plan_details from Plan where Type_plan = '{plan_type}' group by Type_plan;",
                             f"select Money from Customer where Cust_id='{customer_id}';"
                             ])
         expired = date.today() +  timedelta(days=365)
         if dependent_name=="me":
             x=db_con([
-                    f"insert into Plan values('{plan_id[0][0]+1}','{price[0][0]}' ,'{details[0][0]}' ,'{plan_type}','{expired}','{customer_id}');",
+                    f"insert into Plan values('{plan_id[0][0]+1}','{plan_type}','{expired}','{customer_id}');",
                     f"update Customer set Plan_id='{plan_id[0][0]+1}' where Cust_id='{customer_id}';",
                     f"update Customer set Money={money[0][0]-price[0][0]} where Cust_id='{customer_id}';"
 
@@ -256,7 +254,7 @@ def newplan():
                     ])
         else:
             x=db_con([
-                    f"insert into Plan values('{plan_id[0][0]+1}','{price[0][0]}' ,'{details[0][0]}' ,'{plan_type}','{expired}','{customer_id}');",
+                    f"insert into Plan values('{plan_id[0][0]+1}','{plan_type}','{expired}','{customer_id}');",
                     f"update Dependents set Plan_id='{plan_id[0][0]+1}' where D_name='{dependent_name}' and Cust_id='{customer_id}';",
                     f"update Customer set Money={money[0][0]-price[0][0]} where Cust_id='{customer_id}';"
 
@@ -328,15 +326,14 @@ def newuser():
     else:
         plan_id,price,details=db_con([
                             "select count(*) from Plan",
-                            f"Select price from Plan where Type_plan = '{plan_type}' group by Type_plan;",
-                            f"Select Other_Plan_details from Plan where Type_plan = '{plan_type}' group by Type_plan;"
+                            f"Select price from sub_Plan where Type_plan = '{plan_type}';",
                             ])
         expired = date.today() +  timedelta(days=365)
         
         money=randint(1,9)*10000
         x=db_con([
                 f"insert into  Customer values('{cust_id}','{fname}' ,'{lname}' ,{money} ,'{visa_card}' ,'{phone}' , '{gender}','{bday}' ,'{plan_id[0][0]+1}'); ",
-                f"insert into Plan values('{plan_id[0][0]+1}','{price[0][0]}' ,'{details[0][0]}' ,'{plan_type}','{expired}','{cust_id}');",
+                f"insert into Plan values('{plan_id[0][0]+1}','{plan_type}','{expired}','{cust_id}');",
                 f"update Customer set Money={money[0][0]-price[0][0]} where Cust_id='{cust_id}';"
                     ])
         return redirect(f'/login.html')
