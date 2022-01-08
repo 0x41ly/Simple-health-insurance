@@ -67,7 +67,8 @@
                                             <input type="text" name="claim_title" class="form-control">
                                         </div>
                                         
-                                        <div class="mb-3 text-start"> <label for="for">For</label> <select  id="for" name="for" class="form-control" onchange="changeFunc();">
+                                        <div class="mb-3 text-start"> <label for="for">For</label> <select  id="for" name="for" class="form-control"  onchange="changeFunc();">
+                                            
                                             <option value="me">Me,{{ p[0][0] }}</option>
                                             {% for dep in dependents %}
                                             <option value="{{ dep[0] }}">{{ dep[1] }},{{ dep[2] }}</option>
@@ -129,6 +130,7 @@
                 document.getElementById("hospital_name").innerHTML ='{% for hos in hospitalsG %} <option value="{{ hos[0] }}">{{ hos[1] }}</option> {% endfor %}'
             }
         }
+        window.onLoad=changeFunc();
     </script>
 </body>
 

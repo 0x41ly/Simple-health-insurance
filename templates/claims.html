@@ -77,10 +77,10 @@
                     <div class="row">
                         <div class="col-md-12 page-header">
                             <div class="page-pretitle">Overview</div>
-                            <h2 class="page-title">Dashboard</h2>
+                            <h2 class="page-title">Claims</h2>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    
                         <div class="card">
                             <div class="content">
                                 <div class="head">
@@ -92,7 +92,7 @@
                                         <thead class="success">
                                             <tr>
                                                 <th>Claim ID</th>
-                                                <th class="text-end">status</th>
+                                                <th>status</th>
                                                 <th></th>
                                                 <th></th>
                                             </tr>
@@ -105,7 +105,7 @@
                                                 <td><i><a href="/change?value={{ claim[1] }}">{{ c[1] }} </i></a></td>
                                                 <td><a href="/resolve?claim_id={{ c[0] }}" class="btn btn-outline-danger btn-rounded"><i class="bi bi-check"></i>Mark Resolved</a></td>
                                                 <td><a href="/unresolve?claim_id={{ c[0] }}" class="btn btn-outline-danger btn-rounded"><i class="bi bi-eye"></i>Mark Unresolved</a></td>
-                                                <td class="text-end"></td>
+                                                
                                             {% endfor %}
                                             {% endfor %}
                                         </tbody>
@@ -113,7 +113,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    
                     
                 </div>
             </div>
