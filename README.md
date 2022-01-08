@@ -15,4 +15,3 @@ cd Simple-health-insurance
 chmod +x run.sh     
 ./run.sh
 ```
-- Change the env variable to ```production``` for production area

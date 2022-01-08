@@ -54,9 +54,9 @@ CREATE TABLE sub_Plan (
   primary key(Other_Plan_details,Type_plan,Price),
   CONSTRAINT fk_Plan_plan	 foreign key (Type_plan) references Plan (Type_plan) on update cascade
 );
-insert into sub_Plan values('blblbblbl Golden','Golden','1800.00'); 
-insert into sub_Plan values('PremiumPremiumPremium' ,'Premium','800.00');
-insert into sub_Plan values('BasicBasicBasic' ,'Basic','400.00');
+insert into sub_Plan values('Unlimited access','Golden','1800.00'); 
+insert into sub_Plan values('Only 80% of Hospitals are accessable' ,'Premium','800.00');
+insert into sub_Plan values('Only 40% of Hospitals are accessable' ,'Basic','400.00');
 CREATE TABLE  Hospital (
   hospital_id 	INT NOT NULL,
   hospital_name VARCHAR(50) NULL,
