@@ -11,6 +11,7 @@
     <link href="static/assets/vendor/fontawesome/css/brands.min.css" rel="stylesheet">
     <link href="static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="static/assets/css/master.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -66,10 +67,10 @@
                                             <input type="text" name="claim_title" class="form-control">
                                         </div>
                                         
-                                        <div class="mb-3 text-start"> <label for="for">For</label> <select  id="for" name="for" class="form-control">
-                                            <option value="me">Me</option>
+                                        <div class="mb-3 text-start"> <label for="for">For</label> <select  id="for" name="for" class="form-control" onchange="changeFunc();">
+                                            <option value="me">Me,{{ p[0][0] }}</option>
                                             {% for dep in dependents %}
-                                            <option value="{{ dep[1] }}">{{ dep[0] }}</option>
+                                            <option value="{{ dep[0] }}">{{ dep[1] }},{{ dep[2] }}</option>
                                             {% endfor %}
                                             
                                         </select> </div>
@@ -79,7 +80,7 @@
                                         </div>
 
                                         <div class="mb-3"> <label for="hospital_name">Hospital</label> <select  id="hospital_name" name="hospital_name" class="form-control">
-                                            {% for hos in hospitals %}
+                                            {% for hos in hospitalsG %}
                                             <option value="{{ hos[0] }}">{{ hos[1] }}</option>
                                             {% endfor %}
                                             
@@ -113,7 +114,22 @@
     <script src="static/assets/vendor/jquery/jquery.min.js"></script>
     <script src="static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="static/assets/js/script.js"></script>
-    
+    <script type="text/javascript">
+        function changeFunc(){
+       var x = document.getElementById("for");
+       var strUser = x.options[x.selectedIndex].text;
+       var myArray = strUser.split(",");
+       x = myArray[1];
+       
+            if (x == 'Basic') {
+                document.getElementById("hospital_name").innerHTML ='{% for hos in hospitalsB %} <option value="{{ hos[0] }}">{{ hos[1] }}</option> {% endfor %}'
+            } else if (x == 'Premium') {
+                document.getElementById("hospital_name").innerHTML ='{% for hos in hospitalsP %} <option value="{{ hos[0] }}">{{ hos[1] }}</option> {% endfor %}'
+            } else {
+                document.getElementById("hospital_name").innerHTML ='{% for hos in hospitalsG %} <option value="{{ hos[0] }}">{{ hos[1] }}</option> {% endfor %}'
+            }
+        }
+    </script>
 </body>
 
 </html>

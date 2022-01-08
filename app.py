@@ -37,13 +37,16 @@ def index():
 @app.route("/add-claim.html")
 def addClaim():
     customer_id=request.args.get("customer_id")
-    user1,hospitals1,dependents1=db_con([
+    user1,hospitals1,hospitals2,hospitals3,dependents1,p1=db_con([
                             f"select fname,lname from Customer where Cust_id='{customer_id}';",
                             f"select hospital_id,hospital_name from Hospital;",
-                            f"select D_name,Dept_id from Dependents where Cust_id='{customer_id}';"
+                            "select hospital_id,hospital_name from Hospital natural join enroll where Type_plan='Premium';",
+                            "select hospital_id,hospital_name from Hospital natural join enroll where Type_plan='Basic';",
+                            f"Select Dept_id,D_name,Type_plan from Dependents natural join Plan where Cust_id='{customer_id}';",
+                            f"Select Type_plan from Customer natural join Plan where Cust_id='{customer_id}';"
                             ])
 
-    return render_template('add-claim.html',username=user1,hospitals=hospitals1,customer=customer_id,dependents=dependents1)
+    return render_template('add-claim.html',username=user1,hospitalsG=hospitals1,hospitalsP=hospitals2,hospitalsB=hospitals3,customer=customer_id,dependents=dependents1,p=p1)
 
 @app.route("/newclaim", methods = ['POST'])
 def newclaim():
