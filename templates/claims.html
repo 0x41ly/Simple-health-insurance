@@ -101,7 +101,7 @@
                                             {% for claim in claims %}
                                             {% for c in claim %}
                                             <tr>
-                                                <td><i><a href="/claim.html?claim_id={{ claim[0] }}">{{ c[0] }} </i></a></td>
+                                                <td><i><a href="/claim.html?claim_id={{ c[0] }}">{{ c[0] }} </i></a></td>
                                                 <td><i><a href="/change?value={{ claim[1] }}">{{ c[1] }} </i></a></td>
                                                 <td><a href="/resolve?claim_id={{ c[0] }}" class="btn btn-outline-danger btn-rounded"><i class="bi bi-check"></i>Mark Resolved</a></td>
                                                 <td><a href="/unresolve?claim_id={{ c[0] }}" class="btn btn-outline-danger btn-rounded"><i class="bi bi-eye"></i>Mark Unresolved</a></td>

@@ -139,7 +139,7 @@ def newhospital():
 def admin():
     claims1,users1,hospitals1=db_con([
                                         "select status,count(Claim_id) from Claims group by status;",
-                                        "select status,count(Claim_id) from Claims group by Cust_id;",
+                                        "select Cust_id, count(Claims.Claim_id) from Customer natural join Claims group by Cust_id;",
                                         "select hospital_name,count(Claim_id) from Claims natural right outer join Hospital group by hospital_id;",
                                         ]) #list of queries
     
@@ -356,3 +356,37 @@ def users():
     return render_template('users.html' , data=data1)  
 
 
+@app.route("/plan_details.html")
+def plan_details():
+    plan_id1=request.args.get('plan_id')
+    customer_id=request.args.get('customer_id')
+    user1,hospitals1,dependents1=db_con([
+                    f" select fName,lName from Customer where Cust_id='{customer_id}'",
+                    f"select hospital_name from Hospital natural join (select enroll.hospital_id,enroll.Type_plan from Plan natural join enroll where Plan.Plan_id='{plan_id1}' ) as c;",
+                    f"Select Dept_id,D_name from Dependents where Cust_id='{customer_id}' and Plan_id='{plan_id1}';"
+
+
+        ])
+    return render_template('plan_details.html',plan_id=plan_id1,user=user1,hospitals=hospitals1,dependents=dependents1,cust_id=customer_id)
+
+
+@app.route("/updatedependent",methods = ['POST'])
+def updatedependent():
+    dependent_id=request.form.get('dependent_id')
+    customer_id=request.form.get('customer_id')
+    plan_id=request.form.get('plan_id')
+    x=db_con([f"update Dependents set Plan_id='{plan_id}' where Cust_id='{customer_id}' and Dept_id='{dependent_id}';"])
+    return redirect(request.referrer)
+
+@app.route("/updatecustomer",methods = ['POST'])
+def updatecustomer():
+    
+    customer_id=request.form.get('customer_id')
+    plan_id=request.form.get('plan_id')
+    x=db_con([f"update Customer set Plan_id='{plan_id}' where Cust_id='{customer_id}';"])
+    return redirect(request.referrer)
+
+
+@app.route("/logout.html")
+def logout():
+    return redirect("/")

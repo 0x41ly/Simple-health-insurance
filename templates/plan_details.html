@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Admin Dashboard | company</title>
+    <title>Plan Details| company</title>
     <link href="static/assets/vendor/fontawesome/css/fontawesome.min.css" rel="stylesheet">
     <link href="static/assets/vendor/fontawesome/css/solid.min.css" rel="stylesheet">
     <link href="static/assets/vendor/fontawesome/css/brands.min.css" rel="stylesheet">
@@ -18,32 +18,7 @@
 
 <body>
     <div class="wrapper">
-        <nav id="sidebar" class="active">
-
-            <ul class="list-unstyled components text-secondary">
-                <li>
-                    <a href="/admin.html"><i class="fas fa-home"></i> Dashboard</a>
-                </li>
-                
-                <li>
-                    <a href="#pagesmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-copy"></i> Claims</a>
-                    <ul class="collapse list-unstyled" id="pagesmenu">
-                        <li>
-                            <a href="/claims.html?type=new"><i class="fas fa-file"></i> new</a>
-                        </li>
-                        <li>
-                            <a href="/claims.html?type=resolved"><i class="fas fa-info-circle"></i> resolved</a>
-                        </li>
-                        <li>
-                            <a href="/claims.html?type=unresolved"><i class="fas fa-info-circle"></i> unresolved</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="/users.html"><i class="fas fa-user-friends"></i>Users</a>
-                </li>
-            </ul>
-        </nav>
+        
         <div id="body" class="active">
             <!-- navbar navigation component -->
             <nav class="navbar navbar-expand-lg navbar-white bg-white">
@@ -56,12 +31,12 @@
                         <li class="nav-item dropdown">
                             <div class="nav-dropdown">
                                 <a href="#" id="nav2" class="nav-item nav-link dropdown-toggle text-secondary" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-user"></i> <span>Admin</span> <i style="font-size: .8em;" class="fas fa-caret-down"></i>
+                                    <i class="fas fa-user"></i> <span>{{ user[0][0] }} {{ user[0][1] }}</span> <i style="font-size: .8em;" class="fas fa-caret-down"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end nav-link-menu">
                                     <ul class="nav-list">
-                                        <li><a href="" class="dropdown-item"><i class="fas fa-address-card"></i> Profile</a></li>
-                                        <li><a href="/claims.html" class="dropdown-item"><i class="fas fa-cog"></i> Claims</a></li>
+                                        <li><a href="/customer.html?customer_id={{ customer_id }}" class="dropdown-item"><i class="fas fa-address-card"></i> Profile</a></li>
+                                        
                                         <div class="dropdown-divider"></div>
                                         <li><a href="/logout.html" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                                     </ul>
@@ -76,8 +51,15 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 page-header">
-                            <div class="page-pretitle">Overview</div>
-                            <h2 class="page-title">Dashboard</h2>
+                            <div class="page-pretitle"> </div>
+                            
+                            <h2 class="page-title"> Plan {{ plan_id }}
+                            <form id="myform1" method="POST" action="updatecustomer">
+                                <input type="hidden" name="customer_id" value="{{ cust_id }}" />
+                                <input type="hidden" name="plan_id" value="{{ plan_id }}" />
+                            </form>
+                                <a onclick="document.getElementById('myform').submit();" class="btn btn-outline-info btn-rounded" style="float:right">Add Yourself <i class="fas fa-pen"></i></a>
+                            </h2>
                         </div>
                     </div>
                     <div class="row">
@@ -86,22 +68,22 @@
                             <div class="card">
                                 <div class="content">
                                     <div class="head">
-                                        <h5 class="mb-0">Claims report</h5>
-                                        <p class="text-muted">Current year claims' status</p>
+                                        <h5 class="mb-0">Associated Hospitals </h5>
+                                        
                                     </div>
                                     <div class="canvas-wrapper">
                                         <table class="table table-striped">
                                             <thead class="success">
                                                 <tr>
-                                                    <th>Status</th>
-                                                    <th class="text-end">Number of claims</th>
+                                                    <th>Hospital name</th>
+                                                    
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {% for claim in claims %}
+                                                {% for hos in hospitals %}
                                                 <tr>
-                                                    <td><i><a href="/claims.html?status={{ claim[0] }}">{{ claim[0] }} </i></a></td>
-                                                    <td class="text-end"><i><a>{{ claim[1] }} </i></a></td>
+                                                    <td><i><a> {{ hos[0] }}</a></td>
+                                                    
                                                     
                                                 {% endfor %}
                                             </tbody>
@@ -110,61 +92,40 @@
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="content">
                                     <div class="head">
-                                        <h5 class="mb-0">Users' claims</h5>
-                                        <p class="text-muted">Current year users' claims</p>
+                                        <h5 class="mb-0">Associated Dependents</h5>
+                                        
                                     </div>
                                     <div class="canvas-wrapper">
                                         <table class="table table-striped">
                                             <thead class="success">
                                                 <tr>
-                                                    <th>User ID</th>
-                                                    <th class="text-end">Number of claims</th>
+                                                    <th>Dependent ID</th>
+                                                    <th class="text-end">Name</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {% for user in users %}
+                                                {% for dep in dependents %}
                                                 <tr>
-                                                    <td><i><a href="/claims.html?user={{ user[0] }}">{{ user[0] }} </i></a></td>
-                                                    <td class="text-end"><i><a>{{ user[1] }} </i></a></td>
-                                                    
-                                                {% endfor %}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="content">
-                                    <div class="head">
-                                        <h5 class="mb-0">Hospitals</h5>
-                                        <p class="text-muted">Current year Hospitals' deals</p>
-                                    </div>
-                                    <div class="canvas-wrapper">
-                                        <table class="table table-striped">
-                                            <thead class="success">
-                                                <tr>
-                                                    <th>Hospital</th>
-                                                    <th class="text-end">Number of deals</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr><a href="/addhospital.html" class="btn btn-outline-info btn-rounded" style="float:right">Add hospital <i class="fas fa-pen"></i></a></tr>
-                                                {% for hospital in hospitals %}
-                                                <tr>
-                                                    <td><i><a>{{ hospital[0] }} </i></a></td>
-                                                    <td class="text-end">{{ hospital[1] }} </a></td>
+                                                    <td><i><a>{{ dep[0] }} </i></a></td>
+                                                    <td class="text-end">{{ dep[1] }} </a></td>
                                                     
                                                     
                                                 </tr>
                                                 {% endfor %}
                                                 
-                                                    
+                                                    <tr>
+                                                        <form id="myform" method="POST" action="updatedependent">
+                                                            <input type="text" name="dependent_id" placeholder="Dependent ID" />
+                                                            <input type="hidden" name="customer_id" value="{{ cust_id }}" />
+                                                            <input type="hidden" name="plan_id" value="{{ plan_id }}" />
+                                                        </form>
+                                                        <a onclick="document.getElementById('myform').submit();" class="btn btn-outline-info btn-rounded" style="float:right">Add Dependent <i class="fas fa-pen"></i></a>
+                                                    </tr>
                                                 
                                             </tbody>
                                         </table>

@@ -241,7 +241,7 @@
                     {% for plan in purchased %}
                     
                     <tr>
-                    <td>{{ plan[0] }}</td>
+                    <td><a href="/plan_details.html?plan_id={{ plan[0] }}&customer_id={{ user[0][1] }}">{{ plan[0] }}</a></td>
                     <td>{{ plan[1] }}</td>
                     <td>{{ plan[2] }}</td>
 
