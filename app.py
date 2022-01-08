@@ -131,11 +131,11 @@ def newhospital():
                     f"insert into enroll values({hospital_id},'{plan_type}');"
                     ]) # add query here
         if plan_type=='Basic':
-            x=db_con([f"insert into enroll values({hospital_id},'Premium');insert into enroll values({hospital_id},'Golden');"])
+            x=db_con([f"insert into enroll values({hospital_id},'Premium');",f"insert into enroll values({hospital_id},'Golden');"])
         elif plan_type=='Premium':
             x=db_con([f"insert into enroll values({hospital_id},'Golden');"])    
         flash("Successfully added")
-        return redirect(request.referrer)  
+        return redirect('/admin.html')  
 
 
 @app.route("/admin.html")
