@@ -120,6 +120,7 @@ CREATE TABLE  Claims (
 	PRIMARY KEY (Claim_id),
 	Cust_id 	VARCHAR(50),
 	CONSTRAINT fk_Customr_Claim FOREIGN KEY (Cust_id) REFERENCES Customer (Cust_id)on update cascade,
+	CONSTRAINT fk_plan_Claim FOREIGN KEY (plan_id) REFERENCES Plan (plan_id)on update cascade,
 	hospital_id INT,
    CONSTRAINT fk_hospital_id_Claim FOREIGN KEY (hospital_id) REFERENCES  Hospital  (hospital_id)on update cascade
     );
