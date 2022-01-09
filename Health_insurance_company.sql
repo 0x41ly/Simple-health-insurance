@@ -10,8 +10,9 @@ CREATE table Customer (
 	Phone 	VARCHAR(20) ,
 	Gender 	VARCHAR(20)  ,
 	date_of_birth varchar(20) ,
-    Plan_id	 varchar(50) ,
+  Plan_id	 varchar(50) ,
 	PRIMARY KEY (Cust_id)
+
     );
 insert into  Customer values('1','jony' ,'mark' ,'100000000.00' ,'123456789' ,'01026564923' , 'male','10-10-2010' ,'1'); 
 insert into  Customer values('2','michal' ,'mena' ,'200000000.00' ,'987654321' ,'0113595456' , 'male','5-5-1998' ,'2');
@@ -27,6 +28,7 @@ create table Dependents(
 	Plan_id	 varchar(50) ,
 	primary key (Cust_id, D_name, Dept_id,Gender, Relationship,date_of_birth),
 	CONSTRAINT fk_Dependents_Customer	 foreign key (Cust_id ) references Customer  (Cust_id) on update cascade
+	
 	);
 insert into Dependents values('1','12' ,'ali' ,'3-2-2022','male','son','4');
 insert into Dependents values('2','14' ,'abanod' ,'4-2-2010','male','son','5');
@@ -46,6 +48,10 @@ insert into Plan values('3','Golden','20-20-2029','3');
 insert into Plan values('4' ,'Premium','20-20-2029','1');
 insert into Plan values('5' ,'Golden','20-20-2029','2');
 insert into Plan values('6' ,'Basic','20-20-2029','3');
+
+Alter table Customer add CONSTRAINT fk_Customer_PLan	 foreign key (Plan_id ) references Plan  (Plan_id) on update cascade;
+Alter table Dependents add CONSTRAINT fk_Dependents_PLan	 foreign key (Plan_id ) references Plan  (Plan_id) on update cascade;
+
 
 CREATE TABLE sub_Plan (
   Other_Plan_details varchar(250),
