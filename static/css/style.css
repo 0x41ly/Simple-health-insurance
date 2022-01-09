@@ -841,8 +841,8 @@ section {
   color: #fff;
 }
 .pricing .recommended .btn-buy:hover {
-  background: #d91e42;
-  border-color: #d91e42;
+  background: #1eb0d9;
+  border-color: #1eb0d9;
 }
 .pricing .recommended-badge {
   position: absolute;
@@ -852,7 +852,7 @@ section {
   z-index: 1;
   font-size: 13px;
   padding: 3px 25px 6px 25px;
-  background: #fce6ea;
+  background: #ffffff;
   color: #3ca9e4;
   border-radius: 50px;
 }

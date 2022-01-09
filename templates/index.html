@@ -211,9 +211,10 @@
 
         <div class="row">
           {% for plan1 in plans %}
-          
-          <div class="col-lg-4 col-md-6">
-            <div class="box">
+            {% if plan1[0] == 'Premium' -%}
+          <div class="col-lg-4 col-md-6 mt-4 mt-md-0">
+            <div class="box recommended">
+              <span class="recommended-badge">Recommended</span>
               <h3>{{ plan1[0] }}</h3>
               <h4><sup>$</sup>{{ plan1[1] }}<span> / year</span></h4>
               <h4>Details</h4>
@@ -228,7 +229,24 @@
               </div>
             </div>
           </div>
-          
+          {% else %}
+            <div class="col-lg-4 col-md-6">
+            <div class="box">
+              <h3>{{ plan1[0] }}</h3>
+              <h4><sup>$</sup>{{ plan1[1] }}<span> / year</span></h4>
+              <h4>Details</h4>
+              <ul>
+                
+                <li>{{plan1[2]}}</li>
+                
+               
+              </ul>
+              <div class="btn-wrap">
+                <a href="" class="btn-buy">Buy Now</a>
+              </div>
+            </div>
+            </div>
+          {% endif %}
           {% endfor %}
         </div>
 
