@@ -347,6 +347,8 @@ def newuser():
         
         money=randint(1,9)*10000
         
+        
+
         x=db_con([
                 f"insert into  Customer values('{cust_id}','{fname}' ,'{lname}' ,{money} ,'{visa_card}' ,'{phone}' , '{gender}','{bday}' ,'{plan_id[0][0]+1}'); ",
                 f"insert into Plan values('{plan_id[0][0]+1}','{plan_type}','{expired}','{cust_id}');",

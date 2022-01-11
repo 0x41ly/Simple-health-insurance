@@ -63,10 +63,6 @@ insert into Plan values('4' ,'Premium','20-20-2029','1');
 insert into Plan values('5' ,'Golden','20-20-2029','2');
 insert into Plan values('6' ,'Basic','20-20-2029','3');
 
-Alter table Customer add CONSTRAINT fk_Customer_PLan	 foreign key (Plan_id ) references Plan  (Plan_id) on update cascade;
-Alter table Dependents add CONSTRAINT fk_Dependents_PLan	 foreign key (Plan_id ) references Plan  (Plan_id) on update cascade;
-
-
 
 CREATE TABLE  Hospital (
   hospital_id 	INT NOT NULL,
@@ -132,7 +128,7 @@ CREATE TABLE  Claims (
  
 insert into Claims   values('20661526', 2500.00, 'diabetes','1','New','12','1-1-2001','1',73354597);
 insert into Claims   values('15205452', 1500.00,null,'2','Resolved','2','3-5-2006','2',89255485);
-insert into Claims   values('95764258', 750.50,null,'3','unsolved','13','3-9-2030','3',61804435);
+insert into Claims   values('95764258', 750.50,null,'3','Unresolved','13','3-9-2030','3',61804435);
 
  
 
